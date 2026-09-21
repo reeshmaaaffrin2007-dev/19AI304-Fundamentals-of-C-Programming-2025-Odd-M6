@@ -33,7 +33,26 @@ To develop a C program using the static storage class in a function with a param
 ### Step 8:
   Stop
 # Program:
+#include <stdio.h>
+
+void displayCount(int num) {
+    static int count = 0;
+    count++;
+    
+    printf("Function called %d time(s) with parameter: %d\n", count, num);
+}
+
+int main() {
+    displayCount(10);
+    displayCount(20);
+    displayCount(30);
+    displayCount(40);
+    
+    return 0;
+}
 # Output:
+<img width="633" height="222" alt="image" src="https://github.com/user-attachments/assets/b74066cd-42c8-4969-86f2-7575bf8fd314" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -79,7 +98,77 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 11:
   Stop
 # Program:
+#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int subtract(int a, int b) {
+    return a - b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
+float divide(int a, int b) {
+    if(b != 0) {
+        return (float)a / b;
+    } else {
+        printf("Error: Division by zero!\n");
+        return 0;
+    }
+}
+
+int main() {
+    int num1, num2, choice;
+    int (*intFunc)(int, int);
+    float (*floatFunc)(int, int);
+    
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+    
+    printf("\nSelect operation:\n");
+    printf("1. Addition\n");
+    printf("2. Subtraction\n");
+    printf("3. Multiplication\n");
+    printf("4. Division\n");
+    printf("Enter choice (1-4): ");
+    scanf("%d", &choice);
+    
+    switch(choice) {
+        case 1:
+            intFunc = add;
+            printf("Result: %d + %d = %d\n", num1, num2, intFunc(num1, num2));
+            break;
+            
+        case 2:
+            intFunc = subtract;
+            printf("Result: %d - %d = %d\n", num1, num2, intFunc(num1, num2));
+            break;
+            
+        case 3:
+            intFunc = multiply;
+            printf("Result: %d * %d = %d\n", num1, num2, intFunc(num1, num2));
+            break;
+            
+        case 4:
+            floatFunc = divide;
+            printf("Result: %d / %d = %.2f\n", num1, num2, floatFunc(num1, num2));
+            break;
+            
+        default:
+            printf("Invalid choice!\n");
+    }
+    
+    return 0;
+}
 # Output:
+<img width="401" height="389" alt="image" src="https://github.com/user-attachments/assets/f61290ae-5f21-4b72-b817-217526025ed5" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -123,7 +212,53 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10:
   Stop
 # Program:
+
+struct Employee {
+    int empno;
+    char name[50];
+    float salary;
+};
+
+int main() {
+    int n;
+    
+    printf("Enter number of employees: ");
+    scanf("%d", &n);
+    
+    struct Employee emp[n];
+    
+    for(int i = 0; i < n; i++) {
+        printf("\nEmployee %d:\n", i + 1);
+        printf("Number: ");
+        scanf("%d", &emp[i].empno);
+        printf("Name: ");
+        scanf("%s", emp[i].name);
+        printf("Salary: ");
+        scanf("%f", &emp[i].salary);
+    }
+    
+    float max = emp[0].salary;
+    
+    for(int i = 1; i < n; i++) {
+        if(emp[i].salary > max) {
+            max = emp[i].salary;
+        }
+    }
+    
+    printf("\nHighest Salary: %.2f\n", max);
+    printf("Employees with highest salary:\n");
+    
+    for(int i = 0; i < n; i++) {
+        if(emp[i].salary == max) {
+            printf("%d %s %.2f\n", emp[i].empno, emp[i].name, emp[i].salary);
+        }
+    }
+    
+    return 0;
+}
 # Output:
+<img width="397" height="577" alt="image" src="https://github.com/user-attachments/assets/3e2504d9-d842-4a17-bff9-7f0f832ac83a" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -166,7 +301,45 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9:
   Stop
 # Program:
+#include <stdio.h>
+
+struct date {
+    int c_date, c_month, c_year;
+    int b_date, b_month, b_year;
+    int cal_date, cal_month, cal_year;
+};
+
+void findAge(struct date *p) {
+    int month[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    if (p->b_date > p->c_date) {
+        p->c_date += month[p->c_month - 2];
+        p->c_month -= 1;
+    }
+
+    if (p->b_month > p->c_month) {
+        p->c_year -= 1;
+        p->c_month += 12;
+    }
+
+    p->cal_date = p->c_date - p->b_date;
+    p->cal_month = p->c_month - p->b_month;
+    p->cal_year = p->c_year - p->b_year;
+}
+
+int main() {
+    struct date d = {15, 2, 2025, 20, 10, 2000};
+
+    findAge(&d);
+
+    printf("Age: %d years, %d months, %d days\n",
+           d.cal_year, d.cal_month, d.cal_date);
+
+    return 0;
+}
 # Output:
+<img width="585" height="157" alt="image" src="https://github.com/user-attachments/assets/569adf79-d2a7-4bbb-995a-afb5e7362bc4" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -202,7 +375,29 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10:
   Stop
 # Program:
+#include <stdio.h>
+
+union abc {
+    int a;
+    char b;
+};
+
+int main() {
+    union abc var;
+    union abc *ptr;
+
+    ptr = &var;
+
+    var.a = 90;
+
+    printf("Integer value = %d\n", ptr->a);
+    printf("Character value = %c\n", ptr->b);
+
+    return 0;
+}
 # Output:
+<img width="570" height="212" alt="image" src="https://github.com/user-attachments/assets/4f7c0009-3e82-447e-8b10-c04e06066104" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
